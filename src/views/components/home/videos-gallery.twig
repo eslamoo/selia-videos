@@ -1,0 +1,234 @@
+{# Videos Gallery Component (معرض الفيديو - سيليا) #}
+<section class="s-block s-block--videos-gallery{% if component.add_top_space %} mt-8 lg:mt-12{% endif %}{% if component.full_width %} w-full{% else %} container mx-auto px-4{% endif %}">
+  {# Header Section #}
+  {% if component.title or component.subtitle %}
+    <div class="text-center mb-8">
+      {% if component.title %}
+        <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+          {{ component.title }}
+        </h2>
+      {% endif %}
+      {% if component.subtitle %}
+        <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+          {{ component.subtitle }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {# Videos Gallery #}
+  {% if component.videos and component.videos|length > 0 %}
+    <div class="videos-gallery{% if component.display_as_slider %} videos-gallery--slider{% else %} videos-gallery--grid{% endif %}">
+      {% if component.display_as_slider %}
+        {# Slider Layout #}
+        <div class="swiper videos-swiper" data-swiper-config='{"slidesPerView": 1, "spaceBetween": 20, "navigation": {"nextEl": ".videos-next", "prevEl": ".videos-prev"}, "pagination": {"el": ".videos-pagination", "clickable": true}, "breakpoints": {"640": {"slidesPerView": 2}, "1024": {"slidesPerView": 3}}}'>
+          <div class="swiper-wrapper">
+            {% for video in component.videos %}
+              <div class="swiper-slide">
+                <div class="video-item bg-storeBG rounded-lg shadow-lg overflow-hidden">
+                  <div class="video-wrapper relative{% if component.aspect_ratio == 'vertical' %} aspect-[9/16]{% else %} aspect-video{% endif %}">
+                    <video 
+                      class="w-full h-full object-cover" 
+                      data-src="{{ video.video_url }}"
+                      preload="metadata"
+                      muted
+                      loop
+                    >
+                      <source src="{{ video.video_url }}" type="video/mp4">
+                      متصفحك لا يدعم عرض الفيديو.
+                    </video>
+                    
+                    {# Video Controls #}
+                    <div class="video-controls absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                      <div class="flex gap-2">
+                        <button 
+                          class="play-pause-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200"
+                          aria-label="تشغيل/إيقاف الفيديو"
+                        >
+                          <svg class="play-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M8 5v10l8-5-8-5z"/>
+                          </svg>
+                          <svg class="pause-icon w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6 4h2v12H6V4zm6 0h2v12h-2V4z"/>
+                          </svg>
+                        </button>
+                        
+                        <button 
+                          class="mute-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200"
+                          aria-label="كتم/إلغاء كتم الصوت"
+                        >
+                          <svg class="unmute-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.783L4.146 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.146l4.237-3.783z"/>
+                            <path d="M11.293 7.293a1 1 0 011.414 0L14 8.586l1.293-1.293a1 1 0 111.414 1.414L15.414 10l1.293 1.293a1 1 0 01-1.414 1.414L14 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L12.586 10l-1.293-1.293a1 1 0 010-1.414z"/>
+                          </svg>
+                          <svg class="mute-icon w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.783L4.146 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.146l4.237-3.783z"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {% if video.video_title %}
+                    <div class="p-4">
+                      <h3 class="text-lg font-semibold text-store-text-primary">
+                        {{ video.video_title }}
+                      </h3>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          
+          {# Navigation #}
+          <div class="videos-prev absolute top-1/2 left-4 z-10 -translate-y-1/2 bg-white shadow-lg rounded-full p-2 cursor-pointer hover:bg-gray-50 transition-colors">
+            <svg class="w-6 h-6 text-store-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </div>
+          <div class="videos-next absolute top-1/2 right-4 z-10 -translate-y-1/2 bg-white shadow-lg rounded-full p-2 cursor-pointer hover:bg-gray-50 transition-colors">
+            <svg class="w-6 h-6 text-store-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+          
+          {# Pagination #}
+          <div class="videos-pagination flex justify-center mt-8"></div>
+        </div>
+      {% else %}
+        {# Grid Layout #}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for video in component.videos %}
+            <div class="video-item bg-storeBG rounded-lg shadow-lg overflow-hidden">
+              <div class="video-wrapper relative{% if component.aspect_ratio == 'vertical' %} aspect-[9/16]{% else %} aspect-video{% endif %}">
+                <video 
+                  class="w-full h-full object-cover" 
+                  data-src="{{ video.video_url }}"
+                  preload="metadata"
+                  muted
+                  loop
+                >
+                  <source src="{{ video.video_url }}" type="video/mp4">
+                  متصفحك لا يدعم عرض الفيديو.
+                </video>
+                
+                {# Video Controls #}
+                <div class="video-controls absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                  <div class="flex gap-2">
+                    <button 
+                      class="play-pause-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200"
+                      aria-label="تشغيل/إيقاف الفيديو"
+                    >
+                      <svg class="play-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M8 5v10l8-5-8-5z"/>
+                      </svg>
+                      <svg class="pause-icon w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6 4h2v12H6V4zm6 0h2v12h-2V4z"/>
+                      </svg>
+                    </button>
+                    
+                    <button 
+                      class="mute-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200"
+                      aria-label="كتم/إلغاء كتم الصوت"
+                    >
+                      <svg class="unmute-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.783L4.146 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.146l4.237-3.783z"/>
+                        <path d="M11.293 7.293a1 1 0 011.414 0L14 8.586l1.293-1.293a1 1 0 111.414 1.414L15.414 10l1.293 1.293a1 1 0 01-1.414 1.414L14 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L12.586 10l-1.293-1.293a1 1 0 010-1.414z"/>
+                      </svg>
+                      <svg class="mute-icon w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.783L4.146 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.146l4.237-3.783z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              {% if video.video_title %}
+                <div class="p-4">
+                  <h3 class="text-lg font-semibold text-store-text-primary">
+                    {{ video.video_title }}
+                  </h3>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+
+{# JavaScript for Video Controls #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Video control functionality
+  const videoItems = document.querySelectorAll('.s-block--videos-gallery .video-item');
+  
+  videoItems.forEach(item => {
+    const video = item.querySelector('video');
+    const playPauseBtn = item.querySelector('.play-pause-btn');
+    const muteBtn = item.querySelector('.mute-btn');
+    const playIcon = item.querySelector('.play-icon');
+    const pauseIcon = item.querySelector('.pause-icon');
+    const muteIcon = item.querySelector('.mute-icon');
+    const unmuteIcon = item.querySelector('.unmute-icon');
+    
+    // Play/Pause functionality
+    playPauseBtn?.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+      } else {
+        video.pause();
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+      }
+    });
+    
+    // Mute/Unmute functionality
+    muteBtn?.addEventListener('click', () => {
+      video.muted = !video.muted;
+      if (video.muted) {
+        muteIcon.classList.remove('hidden');
+        unmuteIcon.classList.add('hidden');
+      } else {
+        muteIcon.classList.add('hidden');
+        unmuteIcon.classList.remove('hidden');
+      }
+    });
+    
+    // Auto-pause when video ends
+    video?.addEventListener('ended', () => {
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+    });
+  });
+  
+  // Initialize Swiper if slider mode is enabled
+  if (document.querySelector('.videos-swiper')) {
+    // Note: This requires Swiper.js library to be loaded
+    // new Swiper('.videos-swiper', JSON.parse(document.querySelector('.videos-swiper').dataset.swiperConfig));
+  }
+});
+</script>
+
+<style>
+.s-block--videos-gallery .video-controls {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.s-block--videos-gallery .video-item:hover .video-controls {
+  opacity: 1;
+}
+
+.s-block--videos-gallery .swiper-pagination-bullet {
+  background: rgba(var(--store-text-primary), 0.5);
+}
+
+.s-block--videos-gallery .swiper-pagination-bullet-active {
+  background: rgb(var(--store-text-primary));
+}
+</style>

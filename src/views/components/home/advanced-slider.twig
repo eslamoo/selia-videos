@@ -1,0 +1,69 @@
+{# Example: Advanced Slider Component (referenced in problem statement) #}
+<section class="s-block s-block--advanced-slider{% if component.add_top_space %} mt-8 lg:mt-12{% endif %}{% if component.full_width %} w-full{% else %} container mx-auto px-4{% endif %}">
+  {# Header Section #}
+  {% if component.title or component.subtitle %}
+    <div class="text-center mb-8">
+      {% if component.title %}
+        <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+          {{ component.title }}
+        </h2>
+      {% endif %}
+      {% if component.subtitle %}
+        <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+          {{ component.subtitle }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {# Advanced Slider Content #}
+  {% if component.slides and component.slides|length > 0 %}
+    <div class="advanced-slider-wrapper">
+      <div class="swiper advanced-swiper">
+        <div class="swiper-wrapper">
+          {% for slide in component.slides %}
+            <div class="swiper-slide">
+              <div class="slide-content bg-storeBG rounded-lg overflow-hidden shadow-lg">
+                {% if slide.video_url %}
+                  <div class="video-container relative aspect-video">
+                    <video 
+                      class="w-full h-full object-cover" 
+                      src="{{ slide.video_url }}"
+                      autoplay
+                      muted
+                      loop
+                    >
+                      متصفحك لا يدعم عرض الفيديو.
+                    </video>
+                  </div>
+                {% endif %}
+                
+                {% if slide.title or slide.description %}
+                  <div class="slide-info p-6">
+                    {% if slide.title %}
+                      <h3 class="text-xl font-semibold text-store-text-primary mb-2">
+                        {{ slide.title }}
+                      </h3>
+                    {% endif %}
+                    {% if slide.description %}
+                      <p class="text-store-text-secondary">
+                        {{ slide.description }}
+                      </p>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        {# Navigation #}
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        
+        {# Pagination #}
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  {% endif %}
+</section>

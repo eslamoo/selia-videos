@@ -1,0 +1,76 @@
+{# Example: Square Links Component (referenced in problem statement) #}
+<section class="s-block s-block--square-links{% if component.add_top_space %} mt-8 lg:mt-12{% endif %}{% if component.full_width %} w-full{% else %} container mx-auto px-4{% endif %}">
+  {# Header Section #}
+  {% if component.title or component.subtitle %}
+    <div class="text-center mb-8">
+      {% if component.title %}
+        <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+          {{ component.title }}
+        </h2>
+      {% endif %}
+      {% if component.subtitle %}
+        <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+          {{ component.subtitle }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {# Square Links Content #}
+  {% if component.links and component.links|length > 0 %}
+    <div class="square-links-wrapper">
+      {% if component.display_as_slider %}
+        {# Slider Layout #}
+        <div class="swiper square-links-swiper">
+          <div class="swiper-wrapper">
+            {% for link in component.links %}
+              <div class="swiper-slide">
+                <a href="{{ link.url }}" class="square-link-item block bg-storeBG rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <div class="aspect-square relative">
+                    {% if link.image_url %}
+                      <img src="{{ link.image_url }}" alt="{{ link.title }}" class="w-full h-full object-cover">
+                    {% endif %}
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                      <div class="text-center text-white">
+                        {% if link.title %}
+                          <h3 class="text-lg font-semibold mb-2">{{ link.title }}</h3>
+                        {% endif %}
+                        {% if link.description %}
+                          <p class="text-sm opacity-90">{{ link.description }}</p>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination mt-6"></div>
+        </div>
+      {% else %}
+        {# Grid Layout #}
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {% for link in component.links %}
+            <a href="{{ link.url }}" class="square-link-item block bg-storeBG rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <div class="aspect-square relative">
+                {% if link.image_url %}
+                  <img src="{{ link.image_url }}" alt="{{ link.title }}" class="w-full h-full object-cover">
+                {% endif %}
+                <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                  <div class="text-center text-white">
+                    {% if link.title %}
+                      <h3 class="text-lg font-semibold mb-2">{{ link.title }}</h3>
+                    {% endif %}
+                    {% if link.description %}
+                      <p class="text-sm opacity-90">{{ link.description }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>

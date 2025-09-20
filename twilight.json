@@ -1,0 +1,395 @@
+{
+  "components": {
+    "videos_gallery": {
+      "uuid": "550e8400-e29b-41d4-a716-446655440001",
+      "name": "معرض الفيديو (سيليا)",
+      "path": "src/views/components/home/videos-gallery.twig",
+      "fields": {
+        "title": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440011",
+          "type": "text",
+          "label": "العنوان",
+          "default": "معرض الفيديو"
+        },
+        "subtitle": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440012",
+          "type": "text",
+          "label": "العنوان الفرعي",
+          "default": "اكتشف مجموعتنا من الفيديوهات"
+        },
+        "display_as_slider": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440013",
+          "type": "toggle",
+          "label": "عرض كشريط متحرك",
+          "default": true
+        },
+        "aspect_ratio": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440014",
+          "type": "select",
+          "label": "نسبة العرض إلى الارتفاع",
+          "options": [
+            {"value": "horizontal", "label": "أفقي"},
+            {"value": "vertical", "label": "عمودي"}
+          ],
+          "default": "horizontal"
+        },
+        "videos": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440015",
+          "type": "collection",
+          "label": "الفيديوهات",
+          "fields": {
+            "video_url": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440016",
+              "type": "url",
+              "label": "رابط الفيديو",
+              "placeholder": "https://example.com/video.mp4"
+            },
+            "video_title": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440017",
+              "type": "text",
+              "label": "عنوان الفيديو",
+              "placeholder": "أدخل عنوان الفيديو"
+            }
+          }
+        },
+        "add_top_space": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440018",
+          "type": "toggle",
+          "label": "إضافة مساحة علوية",
+          "default": true
+        },
+        "full_width": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440019",
+          "type": "toggle",
+          "label": "عرض كامل",
+          "default": false
+        }
+      }
+    },
+    "store_branches": {
+      "uuid": "550e8400-e29b-41d4-a716-446655440002",
+      "name": "فروع المتجر (سيليا)",
+      "path": "src/views/components/home/store-branches.twig",
+      "fields": {
+        "title": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440021",
+          "type": "text",
+          "label": "العنوان",
+          "default": "فروع المتجر"
+        },
+        "subtitle": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440022",
+          "type": "text",
+          "label": "العنوان الفرعي",
+          "default": "اعثر على أقرب فرع إليك"
+        },
+        "multiple_countries": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440023",
+          "type": "toggle",
+          "label": "فروع في عدة دول",
+          "default": false
+        },
+        "single_country_branches": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440024",
+          "type": "collection",
+          "label": "فروع في دولة واحدة",
+          "condition": {
+            "field": "multiple_countries",
+            "value": false
+          },
+          "fields": {
+            "city_name": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440025",
+              "type": "text",
+              "label": "اسم المدينة",
+              "placeholder": "الرياض"
+            },
+            "map_iframe": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440026",
+              "type": "textarea",
+              "label": "كود الخريطة",
+              "placeholder": "<iframe>...</iframe>"
+            }
+          }
+        },
+        "multiple_countries_branches": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440027",
+          "type": "collection",
+          "label": "فروع في عدة دول",
+          "condition": {
+            "field": "multiple_countries",
+            "value": true
+          },
+          "fields": {
+            "country_name": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440028",
+              "type": "text",
+              "label": "اسم الدولة",
+              "placeholder": "السعودية"
+            },
+            "cities": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440029",
+              "type": "collection",
+              "label": "المدن",
+              "fields": {
+                "city_name": {
+                  "uuid": "550e8400-e29b-41d4-a716-446655440030",
+                  "type": "text",
+                  "label": "اسم المدينة",
+                  "placeholder": "الرياض"
+                },
+                "map_iframe": {
+                  "uuid": "550e8400-e29b-41d4-a716-446655440031",
+                  "type": "textarea",
+                  "label": "كود الخريطة",
+                  "placeholder": "<iframe>...</iframe>"
+                }
+              }
+            }
+          }
+        },
+        "add_top_space": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440032",
+          "type": "toggle",
+          "label": "إضافة مساحة علوية",
+          "default": true
+        },
+        "full_width": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440033",
+          "type": "toggle",
+          "label": "عرض كامل",
+          "default": false
+        }
+      }
+    },
+    "contact_form": {
+      "uuid": "550e8400-e29b-41d4-a716-446655440003",
+      "name": "نموذج التواصل (سيليا)",
+      "path": "src/views/components/home/contact-form.twig",
+      "fields": {
+        "title": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440041",
+          "type": "text",
+          "label": "العنوان",
+          "default": "تواصل معنا"
+        },
+        "subtitle": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440042",
+          "type": "text",
+          "label": "العنوان الفرعي",
+          "default": "نحن هنا للمساعدة والإجابة على استفساراتك"
+        },
+        "form_fields": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440043",
+          "type": "collection",
+          "label": "حقول النموذج",
+          "fields": {
+            "field_type": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440044",
+              "type": "select",
+              "label": "نوع الحقل",
+              "options": [
+                {"value": "text", "label": "نص"},
+                {"value": "email", "label": "بريد إلكتروني"},
+                {"value": "tel", "label": "هاتف"},
+                {"value": "textarea", "label": "نص طويل"},
+                {"value": "select", "label": "قائمة منسدلة"}
+              ],
+              "default": "text"
+            },
+            "field_label": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440045",
+              "type": "text",
+              "label": "تسمية الحقل",
+              "placeholder": "الاسم"
+            },
+            "field_placeholder": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440046",
+              "type": "text",
+              "label": "النص التوضيحي",
+              "placeholder": "أدخل اسمك"
+            },
+            "field_required": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440047",
+              "type": "toggle",
+              "label": "حقل مطلوب",
+              "default": false
+            }
+          }
+        },
+        "submit_button_text": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440048",
+          "type": "text",
+          "label": "نص زر الإرسال",
+          "default": "إرسال"
+        },
+        "add_top_space": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440049",
+          "type": "toggle",
+          "label": "إضافة مساحة علوية",
+          "default": true
+        },
+        "full_width": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440050",
+          "type": "toggle",
+          "label": "عرض كامل",
+          "default": false
+        }
+      }
+    },
+    "advanced_slider": {
+      "uuid": "550e8400-e29b-41d4-a716-446655440004",
+      "name": "شريط متقدم",
+      "path": "src/views/components/home/advanced-slider.twig",
+      "fields": {
+        "title": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440061",
+          "type": "text",
+          "label": "العنوان",
+          "default": "شريط متقدم"
+        },
+        "subtitle": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440062",
+          "type": "text",
+          "label": "العنوان الفرعي"
+        },
+        "slides": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440063",
+          "type": "collection",
+          "label": "الشرائح",
+          "fields": {
+            "video_url": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440064",
+              "type": "url",
+              "label": "رابط الفيديو",
+              "placeholder": "https://example.com/video.mp4"
+            },
+            "title": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440065",
+              "type": "text",
+              "label": "عنوان الشريحة"
+            },
+            "description": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440066",
+              "type": "textarea",
+              "label": "وصف الشريحة"
+            }
+          }
+        },
+        "add_top_space": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440067",
+          "type": "toggle",
+          "label": "إضافة مساحة علوية",
+          "default": true
+        },
+        "full_width": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440068",
+          "type": "toggle",
+          "label": "عرض كامل",
+          "default": false
+        }
+      }
+    },
+    "square_links": {
+      "uuid": "550e8400-e29b-41d4-a716-446655440005",
+      "name": "روابط مربعة",
+      "path": "src/views/components/home/square-links.twig",
+      "fields": {
+        "title": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440071",
+          "type": "text",
+          "label": "العنوان",
+          "default": "روابط مربعة"
+        },
+        "subtitle": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440072",
+          "type": "text",
+          "label": "العنوان الفرعي"
+        },
+        "display_as_slider": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440073",
+          "type": "toggle",
+          "label": "عرض كشريط متحرك",
+          "default": false
+        },
+        "links": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440074",
+          "type": "collection",
+          "label": "الروابط",
+          "fields": {
+            "url": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440075",
+              "type": "url",
+              "label": "الرابط",
+              "placeholder": "https://example.com"
+            },
+            "title": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440076",
+              "type": "text",
+              "label": "العنوان"
+            },
+            "description": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440077",
+              "type": "text",
+              "label": "الوصف"
+            },
+            "image_url": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440078",
+              "type": "url",
+              "label": "رابط الصورة",
+              "placeholder": "https://example.com/image.jpg"
+            }
+          }
+        },
+        "add_top_space": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440079",
+          "type": "toggle",
+          "label": "إضافة مساحة علوية",
+          "default": true
+        },
+        "full_width": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440080",
+          "type": "toggle",
+          "label": "عرض كامل",
+          "default": false
+        }
+      }
+    },
+    "map": {
+      "uuid": "550e8400-e29b-41d4-a716-446655440006",
+      "name": "خريطة",
+      "path": "src/views/components/home/map.twig",
+      "fields": {
+        "title": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440081",
+          "type": "text",
+          "label": "العنوان",
+          "default": "موقعنا"
+        },
+        "subtitle": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440082",
+          "type": "text",
+          "label": "العنوان الفرعي"
+        },
+        "map_iframe": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440083",
+          "type": "textarea",
+          "label": "كود الخريطة",
+          "placeholder": "<iframe>...</iframe>"
+        },
+        "add_top_space": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440084",
+          "type": "toggle",
+          "label": "إضافة مساحة علوية",
+          "default": true
+        },
+        "full_width": {
+          "uuid": "550e8400-e29b-41d4-a716-446655440085",
+          "type": "toggle",
+          "label": "عرض كامل",
+          "default": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selia Videos Theme - Home Components Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        /* Theme Color Variables */
+        :root {
+            --store-text-primary: 31, 41, 55; /* gray-800 equivalent */
+            --store-text-secondary: 107, 114, 128; /* gray-500 equivalent */
+        }
+        
+        .bg-storeBG {
+            background-color: #f9fafb; /* gray-50 equivalent */
+        }
+        
+        .text-store-text-primary {
+            color: rgb(var(--store-text-primary));
+        }
+        
+        .text-store-text-secondary {
+            color: rgb(var(--store-text-secondary));
+        }
+        
+        .bg-store-text-primary {
+            background-color: rgb(var(--store-text-primary));
+        }
+        
+        .border-store-text-primary {
+            border-color: rgb(var(--store-text-primary));
+        }
+        
+        .focus\:ring-store-text-primary:focus {
+            --tw-ring-color: rgb(var(--store-text-primary));
+        }
+        
+        /* Custom styles for components */
+        .s-block--videos-gallery .video-controls {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .s-block--videos-gallery .video-item:hover .video-controls {
+            opacity: 1;
+        }
+
+        .s-block--store-branches .map-wrapper iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        .s-block--contact-form .form-group input:focus,
+        .s-block--contact-form .form-group textarea:focus,
+        .s-block--contact-form .form-group select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(var(--store-text-primary), 0.1);
+        }
+
+        .s-block--contact-form .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(var(--store-text-primary), 0.15);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <header class="bg-store-text-primary text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl font-bold">سيليا فيديوز - مكونات الصفحة الرئيسية</h1>
+            <p class="mt-2 text-gray-200">عرض تطبيقي للمكونات الجديدة</p>
+        </div>
+    </header>
+
+    <main class="py-8">
+        <!-- Videos Gallery Component Demo -->
+        <section class="s-block s-block--videos-gallery mt-8 lg:mt-12 container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+                    معرض الفيديو (سيليا)
+                </h2>
+                <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+                    اكتشف مجموعتنا من الفيديوهات الرائعة
+                </p>
+            </div>
+
+            <div class="videos-gallery videos-gallery--grid">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Sample video items -->
+                    <div class="video-item bg-storeBG rounded-lg shadow-lg overflow-hidden">
+                        <div class="video-wrapper relative aspect-video">
+                            <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                <span class="text-gray-600">نموذج فيديو 1</span>
+                            </div>
+                            <div class="video-controls absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                                <div class="flex gap-2">
+                                    <button class="play-pause-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200">
+                                        <svg class="play-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M8 5v10l8-5-8-5z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="mute-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200">
+                                        <svg class="unmute-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.783L4.146 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.146l4.237-3.783z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-store-text-primary">فيديو تعريفي</h3>
+                        </div>
+                    </div>
+
+                    <div class="video-item bg-storeBG rounded-lg shadow-lg overflow-hidden">
+                        <div class="video-wrapper relative aspect-video">
+                            <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                <span class="text-gray-600">نموذج فيديو 2</span>
+                            </div>
+                            <div class="video-controls absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                                <div class="flex gap-2">
+                                    <button class="play-pause-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200">
+                                        <svg class="play-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M8 5v10l8-5-8-5z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="mute-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200">
+                                        <svg class="unmute-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.783L4.146 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.146l4.237-3.783z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-store-text-primary">معرض المنتجات</h3>
+                        </div>
+                    </div>
+
+                    <div class="video-item bg-storeBG rounded-lg shadow-lg overflow-hidden">
+                        <div class="video-wrapper relative aspect-video">
+                            <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                <span class="text-gray-600">نموذج فيديو 3</span>
+                            </div>
+                            <div class="video-controls absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                                <div class="flex gap-2">
+                                    <button class="play-pause-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200">
+                                        <svg class="play-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M8 5v10l8-5-8-5z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="mute-btn bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-200">
+                                        <svg class="unmute-icon w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.783L4.146 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.146l4.237-3.783z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-store-text-primary">شهادات العملاء</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Store Branches Component Demo -->
+        <section class="s-block s-block--store-branches mt-8 lg:mt-12 container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+                    فروع المتجر (سيليا)
+                </h2>
+                <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+                    اعثر على أقرب فرع إليك
+                </p>
+            </div>
+
+            <div class="branches-wrapper bg-storeBG rounded-lg shadow-lg p-6">
+                <div class="single-country-branches">
+                    <div class="cities-nav border-b border-gray-200 mb-6">
+                        <nav class="-mb-px flex space-x-8 overflow-x-auto" role="tablist">
+                            <button class="city-tab whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors border-store-text-primary text-store-text-primary" data-tab="single-city-1" role="tab" aria-selected="true">
+                                الرياض
+                            </button>
+                            <button class="city-tab whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors border-transparent text-store-text-secondary hover:text-store-text-primary hover:border-gray-300" data-tab="single-city-2" role="tab" aria-selected="false">
+                                جدة
+                            </button>
+                            <button class="city-tab whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors border-transparent text-store-text-secondary hover:text-store-text-primary hover:border-gray-300" data-tab="single-city-3" role="tab" aria-selected="false">
+                                الدمام
+                            </button>
+                        </nav>
+                    </div>
+
+                    <div class="city-content" id="single-city-1" role="tabpanel">
+                        <div class="map-container bg-white rounded-lg overflow-hidden shadow-sm">
+                            <div class="flex items-center justify-center h-64 text-store-text-secondary">
+                                <div class="text-center">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <p>خريطة فرع الرياض</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="city-content hidden" id="single-city-2" role="tabpanel">
+                        <div class="map-container bg-white rounded-lg overflow-hidden shadow-sm">
+                            <div class="flex items-center justify-center h-64 text-store-text-secondary">
+                                <div class="text-center">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <p>خريطة فرع جدة</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="city-content hidden" id="single-city-3" role="tabpanel">
+                        <div class="map-container bg-white rounded-lg overflow-hidden shadow-sm">
+                            <div class="flex items-center justify-center h-64 text-store-text-secondary">
+                                <div class="text-center">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <p>خريطة فرع الدمام</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Component Demo -->
+        <section class="s-block s-block--contact-form mt-8 lg:mt-12 container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+                    نموذج التواصل (سيليا)
+                </h2>
+                <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+                    نحن هنا للمساعدة والإجابة على استفساراتك
+                </p>
+            </div>
+
+            <div class="form-wrapper max-w-4xl mx-auto">
+                <div class="bg-storeBG rounded-lg shadow-lg p-6 lg:p-8">
+                    <form id="contact-form" class="contact-form" method="POST" action="#" novalidate>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label for="default-name" class="block text-sm font-medium text-store-text-primary mb-2">
+                                    الاسم <span class="text-red-500 text-xs">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="default-name"
+                                    name="name"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                                    placeholder="أدخل اسمك الكامل"
+                                    required
+                                />
+                                <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="default-email" class="block text-sm font-medium text-store-text-primary mb-2">
+                                    البريد الإلكتروني <span class="text-red-500 text-xs">*</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    id="default-email"
+                                    name="email"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                                    placeholder="example@domain.com"
+                                    required
+                                />
+                                <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="default-phone" class="block text-sm font-medium text-store-text-primary mb-2">
+                                    رقم الهاتف
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="default-phone"
+                                    name="phone"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                                    placeholder="+966 50 123 4567"
+                                />
+                                <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="default-subject" class="block text-sm font-medium text-store-text-primary mb-2">
+                                    الموضوع
+                                </label>
+                                <input
+                                    type="text"
+                                    id="default-subject"
+                                    name="subject"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                                    placeholder="موضوع الرسالة"
+                                />
+                                <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+                            </div>
+                            
+                            <div class="form-group md:col-span-2">
+                                <label for="default-message" class="block text-sm font-medium text-store-text-primary mb-2">
+                                    الرسالة <span class="text-red-500 text-xs">*</span>
+                                </label>
+                                <textarea
+                                    id="default-message"
+                                    name="message"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors resize-vertical min-h-[120px]"
+                                    placeholder="اكتب رسالتك هنا..."
+                                    required
+                                    rows="5"
+                                ></textarea>
+                                <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 text-center">
+                            <button
+                                type="submit"
+                                class="submit-btn inline-flex items-center px-8 py-3 bg-store-text-primary hover:bg-opacity-90 text-white font-semibold rounded-lg transition-all duration-200 focus:ring-4 focus:ring-store-text-primary focus:ring-opacity-50"
+                            >
+                                <span class="btn-text">إرسال</span>
+                                <svg class="loading-spinner ml-2 h-5 w-5 animate-spin hidden" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="form-messages mt-6 hidden">
+                            <div class="success-message hidden p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                                <div class="flex">
+                                    <svg class="flex-shrink-0 h-5 w-5 text-green-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium">تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-store-text-primary text-white py-6 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 سيليا فيديوز - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <script>
+        // Store Branches Tab Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cityTabs = document.querySelectorAll('.s-block--store-branches .city-tab');
+            cityTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetId = this.dataset.tab;
+                    
+                    // Remove active state from all tabs
+                    cityTabs.forEach(t => {
+                        t.classList.remove('border-store-text-primary', 'text-store-text-primary');
+                        t.classList.add('border-transparent', 'text-store-text-secondary');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    
+                    // Add active state to clicked tab
+                    this.classList.add('border-store-text-primary', 'text-store-text-primary');
+                    this.classList.remove('border-transparent', 'text-store-text-secondary');
+                    this.setAttribute('aria-selected', 'true');
+                    
+                    // Hide all content
+                    document.querySelectorAll('.s-block--store-branches .city-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    
+                    // Show target content
+                    const targetContent = document.querySelector(`#${targetId}`);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+                });
+            });
+
+            // Contact Form Functionality
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = this.querySelector('.submit-btn');
+                    const btnText = this.querySelector('.btn-text');
+                    const loadingSpinner = this.querySelector('.loading-spinner');
+                    const formMessages = this.querySelector('.form-messages');
+                    const successMessage = this.querySelector('.success-message');
+                    
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'جاري الإرسال...';
+                    loadingSpinner.classList.remove('hidden');
+                    
+                    // Simulate form submission
+                    setTimeout(() => {
+                        // Reset loading state
+                        submitBtn.disabled = false;
+                        btnText.textContent = 'إرسال';
+                        loadingSpinner.classList.add('hidden');
+                        
+                        // Show success message
+                        formMessages.classList.remove('hidden');
+                        successMessage.classList.remove('hidden');
+                        
+                        // Reset form
+                        contactForm.reset();
+                        
+                        // Hide success message after 5 seconds
+                        setTimeout(() => {
+                            formMessages.classList.add('hidden');
+                            successMessage.classList.add('hidden');
+                        }, 5000);
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

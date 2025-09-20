@@ -1,0 +1,354 @@
+{# Contact Form Component (نموذج التواصل - سيليا) #}
+<section class="s-block s-block--contact-form{% if component.add_top_space %} mt-8 lg:mt-12{% endif %}{% if component.full_width %} w-full{% else %} container mx-auto px-4{% endif %}">
+  {# Header Section #}
+  {% if component.title or component.subtitle %}
+    <div class="text-center mb-8">
+      {% if component.title %}
+        <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+          {{ component.title }}
+        </h2>
+      {% endif %}
+      {% if component.subtitle %}
+        <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+          {{ component.subtitle }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {# Contact Form #}
+  <div class="form-wrapper max-w-4xl mx-auto">
+    <div class="bg-storeBG rounded-lg shadow-lg p-6 lg:p-8">
+      <form id="contact-form" class="contact-form" method="POST" action="#" novalidate>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {% if component.form_fields and component.form_fields|length > 0 %}
+            {% for field in component.form_fields %}
+              <div class="form-group{% if field.field_type == 'textarea' %} md:col-span-2{% endif %}">
+                <label 
+                  for="field-{{ field.uuid|default(loop.index) }}" 
+                  class="block text-sm font-medium text-store-text-primary mb-2"
+                >
+                  {{ field.field_label }}
+                  {% if field.field_required %}
+                    <span class="text-red-500 text-xs">*</span>
+                  {% endif %}
+                </label>
+                
+                {% if field.field_type == 'textarea' %}
+                  <textarea
+                    id="field-{{ field.uuid|default(loop.index) }}"
+                    name="field_{{ field.uuid|default(loop.index) }}"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors resize-vertical min-h-[120px]"
+                    placeholder="{{ field.field_placeholder }}"
+                    {% if field.field_required %}required{% endif %}
+                    rows="5"
+                  ></textarea>
+                {% elseif field.field_type == 'select' %}
+                  <select
+                    id="field-{{ field.uuid|default(loop.index) }}"
+                    name="field_{{ field.uuid|default(loop.index) }}"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors bg-white"
+                    {% if field.field_required %}required{% endif %}
+                  >
+                    <option value="">{{ field.field_placeholder|default('اختر خياراً') }}</option>
+                    {# Note: Select options would typically come from field configuration #}
+                    <option value="option1">خيار 1</option>
+                    <option value="option2">خيار 2</option>
+                    <option value="option3">خيار 3</option>
+                  </select>
+                {% else %}
+                  <input
+                    type="{{ field.field_type|default('text') }}"
+                    id="field-{{ field.uuid|default(loop.index) }}"
+                    name="field_{{ field.uuid|default(loop.index) }}"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                    placeholder="{{ field.field_placeholder }}"
+                    {% if field.field_required %}required{% endif %}
+                    {% if field.field_type == 'email' %}
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    {% elseif field.field_type == 'tel' %}
+                      pattern="[0-9\+\-\s\(\)]+"
+                    {% endif %}
+                  />
+                {% endif %}
+                
+                <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+              </div>
+            {% endfor %}
+          {% else %}
+            {# Default form fields if none are configured #}
+            <div class="form-group">
+              <label for="default-name" class="block text-sm font-medium text-store-text-primary mb-2">
+                الاسم <span class="text-red-500 text-xs">*</span>
+              </label>
+              <input
+                type="text"
+                id="default-name"
+                name="name"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                placeholder="أدخل اسمك الكامل"
+                required
+              />
+              <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="default-email" class="block text-sm font-medium text-store-text-primary mb-2">
+                البريد الإلكتروني <span class="text-red-500 text-xs">*</span>
+              </label>
+              <input
+                type="email"
+                id="default-email"
+                name="email"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                placeholder="example@domain.com"
+                required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              />
+              <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="default-phone" class="block text-sm font-medium text-store-text-primary mb-2">
+                رقم الهاتف
+              </label>
+              <input
+                type="tel"
+                id="default-phone"
+                name="phone"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                placeholder="+966 50 123 4567"
+                pattern="[0-9\+\-\s\(\)]+"
+              />
+              <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="default-subject" class="block text-sm font-medium text-store-text-primary mb-2">
+                الموضوع
+              </label>
+              <input
+                type="text"
+                id="default-subject"
+                name="subject"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors"
+                placeholder="موضوع الرسالة"
+              />
+              <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+            </div>
+            
+            <div class="form-group md:col-span-2">
+              <label for="default-message" class="block text-sm font-medium text-store-text-primary mb-2">
+                الرسالة <span class="text-red-500 text-xs">*</span>
+              </label>
+              <textarea
+                id="default-message"
+                name="message"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-store-text-primary focus:border-transparent transition-colors resize-vertical min-h-[120px]"
+                placeholder="اكتب رسالتك هنا..."
+                required
+                rows="5"
+              ></textarea>
+              <div class="error-message hidden mt-2 text-sm text-red-600"></div>
+            </div>
+          {% endif %}
+        </div>
+        
+        {# Submit Button #}
+        <div class="mt-8 text-center">
+          <button
+            type="submit"
+            class="submit-btn inline-flex items-center px-8 py-3 bg-store-text-primary hover:bg-opacity-90 text-white font-semibold rounded-lg transition-all duration-200 focus:ring-4 focus:ring-store-text-primary focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span class="btn-text">{{ component.submit_button_text|default('إرسال') }}</span>
+            <svg class="loading-spinner ml-2 h-5 w-5 animate-spin hidden" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </div>
+        
+        {# Success/Error Messages #}
+        <div class="form-messages mt-6 hidden">
+          <div class="success-message hidden p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            <div class="flex">
+              <svg class="flex-shrink-0 h-5 w-5 text-green-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <div class="ml-3">
+                <p class="text-sm font-medium">تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="error-message-container hidden p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+            <div class="flex">
+              <svg class="flex-shrink-0 h-5 w-5 text-red-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+              </svg>
+              <div class="ml-3">
+                <p class="text-sm font-medium">حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+{# JavaScript for Form Functionality #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contact-form');
+  if (!contactForm) return;
+  
+  const submitBtn = contactForm.querySelector('.submit-btn');
+  const btnText = contactForm.querySelector('.btn-text');
+  const loadingSpinner = contactForm.querySelector('.loading-spinner');
+  const formMessages = contactForm.querySelector('.form-messages');
+  const successMessage = contactForm.querySelector('.success-message');
+  const errorMessage = contactForm.querySelector('.error-message-container');
+  
+  // Form validation
+  function validateField(field) {
+    const errorContainer = field.parentNode.querySelector('.error-message');
+    let isValid = true;
+    let errorText = '';
+    
+    // Reset error state
+    field.classList.remove('border-red-500');
+    errorContainer.classList.add('hidden');
+    errorContainer.textContent = '';
+    
+    // Check required fields
+    if (field.required && !field.value.trim()) {
+      isValid = false;
+      errorText = 'هذا الحقل مطلوب';
+    }
+    
+    // Email validation
+    if (field.type === 'email' && field.value.trim()) {
+      const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+      if (!emailPattern.test(field.value.trim())) {
+        isValid = false;
+        errorText = 'يرجى إدخال بريد إلكتروني صحيح';
+      }
+    }
+    
+    // Phone validation
+    if (field.type === 'tel' && field.value.trim()) {
+      const phonePattern = /^[0-9\+\-\s\(\)]+$/;
+      if (!phonePattern.test(field.value.trim()) || field.value.trim().length < 8) {
+        isValid = false;
+        errorText = 'يرجى إدخال رقم هاتف صحيح';
+      }
+    }
+    
+    // Show error if invalid
+    if (!isValid) {
+      field.classList.add('border-red-500');
+      errorContainer.textContent = errorText;
+      errorContainer.classList.remove('hidden');
+    }
+    
+    return isValid;
+  }
+  
+  // Validate all fields
+  function validateForm() {
+    const fields = contactForm.querySelectorAll('input, textarea, select');
+    let isFormValid = true;
+    
+    fields.forEach(field => {
+      if (!validateField(field)) {
+        isFormValid = false;
+      }
+    });
+    
+    return isFormValid;
+  }
+  
+  // Real-time validation
+  const formFields = contactForm.querySelectorAll('input, textarea, select');
+  formFields.forEach(field => {
+    field.addEventListener('blur', () => validateField(field));
+    field.addEventListener('input', () => {
+      if (field.classList.contains('border-red-500')) {
+        validateField(field);
+      }
+    });
+  });
+  
+  // Form submission
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Hide previous messages
+    formMessages.classList.add('hidden');
+    successMessage.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+    
+    // Validate form
+    if (!validateForm()) {
+      return;
+    }
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.textContent = 'جاري الإرسال...';
+    loadingSpinner.classList.remove('hidden');
+    
+    // Simulate form submission (replace with actual form submission logic)
+    setTimeout(() => {
+      // Reset loading state
+      submitBtn.disabled = false;
+      btnText.textContent = '{{ component.submit_button_text|default("إرسال") }}';
+      loadingSpinner.classList.add('hidden');
+      
+      // Show success message (simulate successful submission)
+      formMessages.classList.remove('hidden');
+      successMessage.classList.remove('hidden');
+      
+      // Reset form
+      contactForm.reset();
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        formMessages.classList.add('hidden');
+        successMessage.classList.add('hidden');
+      }, 5000);
+      
+      // In a real implementation, you would:
+      // 1. Send form data to your backend
+      // 2. Handle success/error responses
+      // 3. Show appropriate messages
+    }, 2000);
+  });
+});
+</script>
+
+<style>
+.s-block--contact-form .form-group input:focus,
+.s-block--contact-form .form-group textarea:focus,
+.s-block--contact-form .form-group select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--store-text-primary), 0.1);
+}
+
+.s-block--contact-form .form-group input.border-red-500,
+.s-block--contact-form .form-group textarea.border-red-500,
+.s-block--contact-form .form-group select.border-red-500 {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.s-block--contact-form .submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--store-text-primary), 0.15);
+}
+
+.s-block--contact-form .submit-btn:active {
+  transform: translateY(0);
+}
+</style>

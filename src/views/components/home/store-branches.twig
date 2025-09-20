@@ -1,0 +1,294 @@
+{# Store Branches Component (فروع المتجر - سيليا) #}
+<section class="s-block s-block--store-branches{% if component.add_top_space %} mt-8 lg:mt-12{% endif %}{% if component.full_width %} w-full{% else %} container mx-auto px-4{% endif %}">
+  {# Header Section #}
+  {% if component.title or component.subtitle %}
+    <div class="text-center mb-8">
+      {% if component.title %}
+        <h2 class="text-2xl lg:text-3xl font-bold text-store-text-primary mb-4">
+          {{ component.title }}
+        </h2>
+      {% endif %}
+      {% if component.subtitle %}
+        <p class="text-lg text-store-text-secondary max-w-2xl mx-auto">
+          {{ component.subtitle }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {# Branches Content #}
+  <div class="branches-wrapper bg-storeBG rounded-lg shadow-lg p-6">
+    {% if component.multiple_countries %}
+      {# Multiple Countries Layout #}
+      {% if component.multiple_countries_branches and component.multiple_countries_branches|length > 0 %}
+        <div class="countries-tabs">
+          {# Countries Tab Navigation #}
+          <div class="countries-nav border-b border-gray-200 mb-6">
+            <nav class="-mb-px flex space-x-8 overflow-x-auto" role="tablist">
+              {% for country in component.multiple_countries_branches %}
+                <button 
+                  class="country-tab whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors{% if loop.first %} border-store-text-primary text-store-text-primary{% else %} border-transparent text-store-text-secondary hover:text-store-text-primary hover:border-gray-300{% endif %}"
+                  data-tab="country-{{ loop.index }}"
+                  role="tab"
+                  aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+                >
+                  {{ country.country_name }}
+                </button>
+              {% endfor %}
+            </nav>
+          </div>
+
+          {# Countries Tab Content #}
+          {% for country in component.multiple_countries_branches %}
+            <div 
+              class="country-content{% if not loop.first %} hidden{% endif %}"
+              id="country-{{ loop.index }}"
+              role="tabpanel"
+            >
+              {% if country.cities and country.cities|length > 0 %}
+                <div class="cities-section">
+                  {# Cities Tab Navigation #}
+                  <div class="cities-nav mb-4">
+                    <nav class="flex flex-wrap gap-2" role="tablist">
+                      {% for city in country.cities %}
+                        <button 
+                          class="city-tab px-4 py-2 rounded-full text-sm font-medium transition-colors{% if loop.first %} bg-store-text-primary text-white{% else %} bg-gray-100 text-store-text-secondary hover:bg-gray-200{% endif %}"
+                          data-tab="city-{{ loop.parent.loop.index }}-{{ loop.index }}"
+                          role="tab"
+                          aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+                        >
+                          {{ city.city_name }}
+                        </button>
+                      {% endfor %}
+                    </nav>
+                  </div>
+
+                  {# Cities Content #}
+                  {% for city in country.cities %}
+                    <div 
+                      class="city-content{% if not loop.first %} hidden{% endif %}"
+                      id="city-{{ loop.parent.loop.index }}-{{ loop.index }}"
+                      role="tabpanel"
+                    >
+                      <div class="map-container bg-white rounded-lg overflow-hidden shadow-sm">
+                        {% if city.map_iframe %}
+                          <div class="map-wrapper relative min-h-[400px]">
+                            {{ city.map_iframe|raw }}
+                          </div>
+                        {% else %}
+                          <div class="flex items-center justify-center h-64 text-store-text-secondary">
+                            <div class="text-center">
+                              <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                              </svg>
+                              <p>الخريطة غير متوفرة لهذه المدينة</p>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="text-center py-8 text-store-text-secondary">
+                  <p>لا توجد مدن متوفرة في {{ country.country_name }}</p>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center py-8 text-store-text-secondary">
+          <p>لا توجد فروع متوفرة</p>
+        </div>
+      {% endif %}
+    {% else %}
+      {# Single Country Layout #}
+      {% if component.single_country_branches and component.single_country_branches|length > 0 %}
+        <div class="single-country-branches">
+          {# Cities Tab Navigation #}
+          <div class="cities-nav border-b border-gray-200 mb-6">
+            <nav class="-mb-px flex space-x-8 overflow-x-auto" role="tablist">
+              {% for city in component.single_country_branches %}
+                <button 
+                  class="city-tab whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors{% if loop.first %} border-store-text-primary text-store-text-primary{% else %} border-transparent text-store-text-secondary hover:text-store-text-primary hover:border-gray-300{% endif %}"
+                  data-tab="single-city-{{ loop.index }}"
+                  role="tab"
+                  aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+                >
+                  {{ city.city_name }}
+                </button>
+              {% endfor %}
+            </nav>
+          </div>
+
+          {# Cities Content #}
+          {% for city in component.single_country_branches %}
+            <div 
+              class="city-content{% if not loop.first %} hidden{% endif %}"
+              id="single-city-{{ loop.index }}"
+              role="tabpanel"
+            >
+              <div class="map-container bg-white rounded-lg overflow-hidden shadow-sm">
+                {% if city.map_iframe %}
+                  <div class="map-wrapper relative min-h-[400px]">
+                    {{ city.map_iframe|raw }}
+                  </div>
+                {% else %}
+                  <div class="flex items-center justify-center h-64 text-store-text-secondary">
+                    <div class="text-center">
+                      <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      </svg>
+                      <p>الخريطة غير متوفرة لهذه المدينة</p>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center py-8 text-store-text-secondary">
+          <p>لا توجد فروع متوفرة</p>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{# JavaScript for Tabs Functionality #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const storeBranchesSection = document.querySelector('.s-block--store-branches');
+  if (!storeBranchesSection) return;
+
+  // Country tabs functionality (for multiple countries)
+  const countryTabs = storeBranchesSection.querySelectorAll('.country-tab');
+  countryTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const targetId = this.dataset.tab;
+      
+      // Remove active state from all country tabs
+      countryTabs.forEach(t => {
+        t.classList.remove('border-store-text-primary', 'text-store-text-primary');
+        t.classList.add('border-transparent', 'text-store-text-secondary');
+        t.setAttribute('aria-selected', 'false');
+      });
+      
+      // Add active state to clicked tab
+      this.classList.add('border-store-text-primary', 'text-store-text-primary');
+      this.classList.remove('border-transparent', 'text-store-text-secondary');
+      this.setAttribute('aria-selected', 'true');
+      
+      // Hide all country content
+      storeBranchesSection.querySelectorAll('.country-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+      
+      // Show target country content
+      const targetContent = storeBranchesSection.querySelector(`#${targetId}`);
+      if (targetContent) {
+        targetContent.classList.remove('hidden');
+        
+        // Reset city tabs for the new country
+        const cityTabs = targetContent.querySelectorAll('.city-tab');
+        const cityContents = targetContent.querySelectorAll('.city-content');
+        
+        cityTabs.forEach((cityTab, index) => {
+          if (index === 0) {
+            cityTab.classList.add('bg-store-text-primary', 'text-white');
+            cityTab.classList.remove('bg-gray-100', 'text-store-text-secondary');
+            cityTab.setAttribute('aria-selected', 'true');
+          } else {
+            cityTab.classList.remove('bg-store-text-primary', 'text-white');
+            cityTab.classList.add('bg-gray-100', 'text-store-text-secondary');
+            cityTab.setAttribute('aria-selected', 'false');
+          }
+        });
+        
+        cityContents.forEach((content, index) => {
+          if (index === 0) {
+            content.classList.remove('hidden');
+          } else {
+            content.classList.add('hidden');
+          }
+        });
+      }
+    });
+  });
+
+  // City tabs functionality
+  const cityTabs = storeBranchesSection.querySelectorAll('.city-tab');
+  cityTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const targetId = this.dataset.tab;
+      
+      // Find the parent container (country or single country)
+      const parentContainer = this.closest('.country-content, .single-country-branches');
+      if (!parentContainer) return;
+      
+      // Remove active state from all city tabs in this container
+      const siblingTabs = parentContainer.querySelectorAll('.city-tab');
+      siblingTabs.forEach(t => {
+        t.classList.remove('bg-store-text-primary', 'text-white');
+        t.classList.add('bg-gray-100', 'text-store-text-secondary');
+        t.setAttribute('aria-selected', 'false');
+      });
+      
+      // Add active state to clicked tab
+      this.classList.add('bg-store-text-primary', 'text-white');
+      this.classList.remove('bg-gray-100', 'text-store-text-secondary');
+      this.setAttribute('aria-selected', 'true');
+      
+      // Hide all city content in this container
+      parentContainer.querySelectorAll('.city-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+      
+      // Show target city content
+      const targetContent = parentContainer.querySelector(`#${targetId}`);
+      if (targetContent) {
+        targetContent.classList.remove('hidden');
+      }
+    });
+  });
+});
+</script>
+
+<style>
+.s-block--store-branches .map-wrapper iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+}
+
+.s-block--store-branches .countries-nav,
+.s-block--store-branches .cities-nav {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--store-text-primary), 0.3) transparent;
+}
+
+.s-block--store-branches .countries-nav::-webkit-scrollbar,
+.s-block--store-branches .cities-nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.s-block--store-branches .countries-nav::-webkit-scrollbar-track,
+.s-block--store-branches .cities-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.s-block--store-branches .countries-nav::-webkit-scrollbar-thumb,
+.s-block--store-branches .cities-nav::-webkit-scrollbar-thumb {
+  background: rgba(var(--store-text-primary), 0.3);
+  border-radius: 2px;
+}
+
+.s-block--store-branches .countries-nav::-webkit-scrollbar-thumb:hover,
+.s-block--store-branches .cities-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--store-text-primary), 0.5);
+}
+</style>
