@@ -4,16 +4,13 @@ class SallaArabianOudWorld extends HTMLElement {
   }
 
   connectedCallback() {
-    // Register translations
-    this.registerTranslations();
-    
-    // Wait for Salla to be ready
+    // Wait for Salla to be ready, then register translations and render
     if (typeof salla !== 'undefined') {
       salla.onReady(() => {
-        this.render();
+        this.registerTranslations();
       });
     } else {
-      this.render();
+      console.warn('Salla SDK not loaded');
     }
   }
 
@@ -23,7 +20,9 @@ class SallaArabianOudWorld extends HTMLElement {
       return;
     }
 
-    Salla.lang.addBulk({
+    // Wait for translations to be loaded before adding custom translations
+    Salla.lang.onLoaded(() => {
+      Salla.lang.addBulk({
       'arabian_oud.hero_title': {
         ar: 'العربية للعود - خبره منذ ١٩٨٢',
         en: 'Authentic formulations from the East. Founded 1982.',
@@ -163,7 +162,10 @@ class SallaArabianOudWorld extends HTMLElement {
         tr: 'Kokularımızı keşfedin',
         it: 'Esplora le nostre fragranze',
         ms: 'Terokai wangian kami'
-      }
+      });
+      
+      // Render after translations are registered
+      this.render();
     });
   }
 
